@@ -1,6 +1,6 @@
 # clipr
 
-A TypeScript CLI tool to merge and split MP4 videos using ffmpeg.
+A minimal CLI tool written with TypeScript to merge and split MP4 videos using ffmpeg.
 
 ## Features
 
@@ -22,9 +22,15 @@ A TypeScript CLI tool to merge and split MP4 videos using ffmpeg.
 
 ## Installation
 
+### Standard Installation
+
 ```bash
 pnpm install
 ```
+
+### NixOS
+
+For NixOS users, see [docs/NIXOS.md](docs/NIXOS.md) for installation instructions using Home Manager or system packages.
 
 ## Usage
 
