@@ -1,5 +1,5 @@
 import type { Command } from 'commander';
-import { getRecentMp4Videos } from '../utils/files';
+import { getMp4Videos } from '../utils/files';
 import { selectVideosForMerge, promptForOutputFilename } from '../utils/prompts';
 import { mergeVideos } from '../lib/merge';
 import { cleanup } from '../utils/cleanup';
@@ -7,23 +7,31 @@ import { cleanup } from '../utils/cleanup';
 interface MergeOptions {
   directory: string;
   output: string;
+  days?: string;
 }
 
 export const setupMergeCommand = (program: Command): void => {
   program
     .command('merge')
-    .description('Select and merge MP4 videos from the last week')
+    .description('Select and merge MP4 videos')
     .option('-d, --directory <path>', 'Directory to search for videos', process.cwd())
     .option('-o, --output <name>', 'Output file name (skips interactive prompt)', '')
+    .option('--days <number>', 'Only show videos from last N days (default: all videos)')
     .action(async (options: MergeOptions) => {
       try {
-        console.log(`Scanning for MP4 videos in: ${options.directory}`);
-        console.log('Looking for videos modified in the last 7 days...\n');
+        const daysFilter = options.days ? parseInt(options.days) : undefined;
 
-        const videos = getRecentMp4Videos(options.directory);
+        console.log(`Scanning for MP4 videos in: ${options.directory}`);
+        if (daysFilter) {
+          console.log(`Filtering videos from last ${daysFilter} day(s)...\n`);
+        } else {
+          console.log('Showing all MP4 videos...\n');
+        }
+
+        const videos = getMp4Videos(options.directory, daysFilter);
 
         if (videos.length === 0) {
-          console.log('No MP4 videos found from the last week.');
+          console.log('No MP4 videos found.');
           return;
         }
 

@@ -10,12 +10,15 @@ export const formatBytes = (bytes: number): string => {
   return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
 };
 
-export const getRecentMp4Videos = (directory: string): VideoFile[] => {
-  const oneWeekAgo = new Date();
-  oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
-
+export const getMp4Videos = (directory: string, days?: number): VideoFile[] => {
   const files = readdirSync(directory);
   const videoFiles: VideoFile[] = [];
+
+  let cutoffDate: Date | null = null;
+  if (days !== undefined) {
+    cutoffDate = new Date();
+    cutoffDate.setDate(cutoffDate.getDate() - days);
+  }
 
   for (const file of files) {
     if (!file.toLowerCase().endsWith('.mp4')) continue;
@@ -23,7 +26,8 @@ export const getRecentMp4Videos = (directory: string): VideoFile[] => {
     const filePath = join(directory, file);
     const stats = statSync(filePath);
 
-    if (stats.mtime >= oneWeekAgo) {
+    // Filter by date only if days parameter is provided
+    if (cutoffDate === null || stats.mtime >= cutoffDate) {
       videoFiles.push({
         name: file,
         path: filePath,
