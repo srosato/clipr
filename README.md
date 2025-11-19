@@ -4,10 +4,18 @@ A TypeScript CLI tool to merge and split MP4 videos using ffmpeg.
 
 ## Features
 
-- Automatically finds MP4 videos modified in the last 7 days
-- Interactive selection with checkbox interface
-- Shows file size and modification date for each video
-- Uses ffmpeg for fast, lossless merging (no re-encoding)
+- **Merge** - Combine multiple MP4 videos into one
+  - Automatically finds MP4 videos modified in the last 7 days
+  - Interactive multi-selection with checkbox interface
+  - Shows file size and modification date for each video
+  - Fast, lossless merging (no re-encoding)
+
+- **Split** - Divide an MP4 video into multiple parts
+  - Interactive single video selection
+  - Specify number of parts to split into
+  - Optional prefix for output filenames
+  - Custom base name for output files
+  - Fast, lossless splitting (no re-encoding)
 
 ## Installation
 
@@ -17,22 +25,29 @@ pnpm install
 
 ## Usage
 
-### Quick start (with tsx - no build needed):
+### Merge videos
+
+Quick start (with tsx - no build needed):
 
 ```bash
 pnpm start
-```
-
-### Or run directly:
-
-```bash
+# or
 pnpm exec tsx src/index.ts merge
 ```
 
-### With custom options:
+With custom options:
 
 ```bash
 pnpm exec tsx src/index.ts merge --directory /path/to/videos --output my-merged-video.mp4
+```
+
+### Split videos
+
+```bash
+pnpm exec tsx src/index.ts split
+
+# With custom options
+pnpm exec tsx src/index.ts split --directory /path/to/videos --output-dir ./output
 ```
 
 ### Build and run compiled TypeScript:
@@ -46,17 +61,46 @@ node dist/index.js merge
 
 ```bash
 pnpm build:bundle
+
+# Run merge
 node clipr merge
+
+# Run split
+node clipr split
 
 # Or install globally
 sudo cp clipr /usr/local/bin/
 clipr merge
+clipr split
 ```
 
-## Options
+## Commands
 
+### `clipr merge`
+
+Merge multiple MP4 videos into one.
+
+**Options:**
 - `-d, --directory <path>` - Directory to search for videos (default: current directory)
 - `-o, --output <name>` - Output file name (skips interactive prompt)
+
+**Interactive prompts:**
+1. Select videos to merge (multi-select with checkboxes)
+2. Enter output filename (default: merged-output)
+
+### `clipr split`
+
+Split an MP4 video into multiple parts.
+
+**Options:**
+- `-d, --directory <path>` - Directory to search for videos (default: current directory)
+- `-o, --output-dir <path>` - Output directory for split parts (default: out)
+
+**Interactive prompts:**
+1. Select video to split (single selection)
+2. Number of parts to split into (default: 2)
+3. Optional prefix for output files
+4. Base name for output files
 
 ## Requirements
 
@@ -66,9 +110,22 @@ clipr merge
 
 ## How it works
 
+### Merge
+
 1. Scans the specified directory for MP4 files
 2. Filters videos to only those modified in the last 7 days
 3. Displays an interactive checkbox list to select videos
 4. Prompts for output filename (default: merged-output, .mp4 extension added automatically if not included)
 5. Creates a file list and uses ffmpeg concat demuxer to merge selected videos
 6. Outputs the merged video with no quality loss
+
+### Split
+
+1. Scans the specified directory for MP4 files
+2. Filters videos to only those modified in the last 7 days
+3. Displays an interactive list to select a single video
+4. Prompts for split options (number of parts, prefix, base name)
+5. Uses ffprobe to determine video duration
+6. Calculates duration per part
+7. Uses ffmpeg to split the video into parts without re-encoding (-c copy)
+8. Outputs split parts to a subdirectory with consistent naming

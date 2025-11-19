@@ -12,6 +12,9 @@ build/
 clipr
 *.tsbuildinfo
 
+# Output directories
+out/
+
 # Video files (you probably don't want to commit large video files)
 *.mp4
 *.avi
