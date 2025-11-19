@@ -1,0 +1,33 @@
+{
+  "name": "merge",
+  "version": "1.0.0",
+  "description": "CLI tool to merge recent MP4 videos",
+  "main": "dist/index.js",
+  "bin": {
+    "video-merger": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "tsx src/index.ts merge",
+    "dev": "tsx src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["video", "merge", "ffmpeg", "cli"],
+  "author": "",
+  "license": "ISC",
+  "engines": {
+    "node": ">=16.0.0",
+    "pnpm": ">=8.0.0"
+  },
+  "packageManager": "pnpm@10.15.1",
+  "dependencies": {
+    "@types/inquirer": "^9.0.9",
+    "@types/node": "^24.10.1",
+    "commander": "^14.0.2",
+    "inquirer": "^13.0.1"
+  },
+  "devDependencies": {
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3"
+  }
+}
