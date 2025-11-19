@@ -1,6 +1,6 @@
-# Video Merger CLI
+# clipr
 
-A TypeScript CLI tool to select and merge recent MP4 videos using ffmpeg.
+A TypeScript CLI tool to merge and split MP4 videos using ffmpeg.
 
 ## Features
 
@@ -35,11 +35,22 @@ pnpm exec tsx src/index.ts merge
 pnpm exec tsx src/index.ts merge --directory /path/to/videos --output my-merged-video.mp4
 ```
 
-### Build and run as a binary:
+### Build and run compiled TypeScript:
 
 ```bash
 pnpm build
 node dist/index.js merge
+```
+
+### Build single-file executable:
+
+```bash
+pnpm build:bundle
+node clipr merge
+
+# Or install globally
+sudo cp clipr /usr/local/bin/
+clipr merge
 ```
 
 ## Options

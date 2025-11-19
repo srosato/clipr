@@ -21,6 +21,9 @@ importers:
         specifier: ^13.0.1
         version: 13.0.1(@types/node@24.10.1)
     devDependencies:
+      '@vercel/ncc':
+        specifier: ^0.38.4
+        version: 0.38.4
       tsx:
         specifier: ^4.20.6
         version: 4.20.6
@@ -328,6 +331,10 @@ packages:
 
   '@types/through@0.0.33':
     resolution: {integrity: sha512-HsJ+z3QuETzP3cswwtzt2vEIiHBk/dCcHGhbmG5X3ecnwFD/lPrMpliGXxSCg03L9AhrdwA4Oz/qfspkDW+xGQ==}
+
+  '@vercel/ncc@0.38.4':
+    resolution: {integrity: sha512-8LwjnlP39s08C08J5NstzriPvW1SP8Zfpp1BvC2sI35kPeZnHfxVkCwu4/+Wodgnd60UtT1n8K8zw+Mp7J9JmQ==}
+    hasBin: true
 
   ansi-regex@6.2.2:
     resolution: {integrity: sha512-Bq3SmSpyFHaWjPk8If9yc6svM8c56dB5BAtW4Qbw5jHTwwXXcTLoRMkpDJp6VL0XzlWaCHTXrkFURMYmD0sLqg==}
@@ -641,6 +648,8 @@ snapshots:
   '@types/through@0.0.33':
     dependencies:
       '@types/node': 24.10.1
+
+  '@vercel/ncc@0.38.4': {}
 
   ansi-regex@6.2.2: {}
 

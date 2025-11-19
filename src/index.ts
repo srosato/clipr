@@ -150,8 +150,8 @@ async function mergeVideos(videos: VideoFile[], outputName: string): Promise<voi
 const program = new Command();
 
 program
-  .name('video-merger')
-  .description('CLI tool to merge recent MP4 videos')
+  .name('clipr')
+  .description('CLI tool to merge and split MP4 videos')
   .version('1.0.0');
 
 program

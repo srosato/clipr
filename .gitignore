@@ -9,6 +9,7 @@ yarn.lock
 # Build output
 dist/
 build/
+clipr
 *.tsbuildinfo
 
 # Video files (you probably don't want to commit large video files)
@@ -54,3 +55,5 @@ coverage/
 tmp/
 temp/
 *.tmp
+
+video-splitter/
