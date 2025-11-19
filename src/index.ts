@@ -148,28 +148,30 @@ async function mergeVideos(videos: VideoFile[], outputName: string): Promise<voi
 }
 
 async function selectSingleVideo(videos: VideoFile[]): Promise<VideoFile> {
-  const choices = videos.map((video, index) => ({
+  const choices = videos.map(video => ({
     name: `${video.name} (${video.size}) - ${video.modified.toLocaleString()}`,
-    value: video,
-    short: video.name
+    value: video
   }));
-
-  console.log(`Select one of the following videos:\n`);
-  videos.forEach((v, i) => {
-    console.log(`  ${i + 1}. ${v.name} (${v.size}) - ${v.modified.toLocaleString()}`);
-  });
-  console.log('');
 
   const answers = await inquirer.prompt([
     {
-      type: 'rawlist',
+      type: 'checkbox',
       name: 'selectedVideo',
-      message: 'Select video to split (enter number):',
-      choices: choices
+      message: 'Select video to split (select one):',
+      choices: choices,
+      validate: (input) => {
+        if (input.length === 0) {
+          return 'Please select one video';
+        }
+        if (input.length > 1) {
+          return 'Please select only one video';
+        }
+        return true;
+      }
     }
   ]);
 
-  return answers.selectedVideo;
+  return answers.selectedVideo[0];
 }
 
 interface SplitOptions {
